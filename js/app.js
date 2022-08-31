@@ -41,7 +41,7 @@ const displayPhones = phones =>{
       <div class="card-body">
         <h5 class="card-title">${phone.phone_name}</h5>
         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <button class="btn btn-primary" type="button">Detales</button>
+        <button onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Detales</button>
       </div>
     </div>
     `;
@@ -71,6 +71,37 @@ const togglySpenner = isLoader =>{
   }
 }
 
-
+// button detaile show ====== modiul 34-6,7=======
+const loadPhoneDetails = async id =>{
+  const url = `https://openapi.programming-hero.com/api/phone/${id}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  displayLodeDetails(data.data)
+}
+const displayLodeDetails = details =>{
+  const detailsTitals =document.getElementById('details-titale');
+  detailsTitals.innerText =details.name;
+  const modalBody =document.getElementById('modal-body');
+  modalBody.innerHTML =`
+  <p>Publiced:${details.releaseDate ? details.releaseDate : 'No release date found'}</p>
+  <p>Storage:${details.mainFeatures.memory}</p>
+  `;
+  
+ 
+  console.log(details)
+}
 //============ 1st function call here ============
-// loadPhones()
+// loadPhones('phone')
+
+
+
+
+
+// Get the input field enter press work
+var input = document.getElementById("input-field");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("button-addon2").click();
+  }
+});
